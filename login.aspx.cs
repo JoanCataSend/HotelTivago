@@ -13,44 +13,55 @@ namespace HotelTivago
         {
             string DBpath = Server.MapPath("~/bbdd/hoteltrivago.db");
 
-            using (SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;"))
+            SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
+            conn.Open();
+
+            try
             {
-                conn.Open();
+                SQLiteCommand cmd = new SQLiteCommand("SELECT profile, password FROM users WHERE username=@u", conn);
+                cmd.Parameters.AddWithValue("@u", txtUser.Text);
 
-                using (SQLiteCommand cmd = new SQLiteCommand("SELECT profile, password FROM users WHERE username=@u", conn))
+                SQLiteDataReader r = cmd.ExecuteReader();
+
+                bool loginCorrecto = false;
+
+                if (r.Read())
                 {
-                    cmd.Parameters.AddWithValue("@u", txtUser.Text);
+                    string role = r.GetString(0);
+                    string storedPassword = r.GetString(1);
 
-                    using (SQLiteDataReader r = cmd.ExecuteReader())
+                    if (storedPassword == txtPass.Text)
                     {
-                        if (r.Read())
+                        loginCorrecto = true;
+
+                        Session["Username"] = txtUser.Text;
+                        Session["Role"] = role;
+
+                        if (role == "receptionist")
                         {
-                            string role = r.GetString(0);
-                            string storedPassword = r.GetString(1);
+                            Response.Redirect("receptionist.aspx");
+                        }
 
-                            if (storedPassword == txtPass.Text)
-                            {
-                                Session["Username"] = txtUser.Text;
-                                Session["Role"] = role;
-
-                                if (role == "receptionist")
-                                {
-                                    Response.Redirect("receptionist.aspx");
-                                    return;
-                                }
-
-                                if (role == "client")
-                                {
-                                    Response.Redirect("client.aspx");
-                                    return;
-                                }
-                            }
+                        if (role == "client")
+                        {
+                            Response.Redirect("client.aspx");
                         }
                     }
                 }
+
+                r.Close();
+
+                if (!loginCorrecto)
+                {
+                    lblError.Text = "Invalid username or password.";
+                }
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = "Error: " + ex.Message;
             }
 
-            lblError.Text = "Invalid username or password.";
+            conn.Close();
         }
     }
 }
