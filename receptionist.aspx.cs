@@ -9,6 +9,12 @@ namespace HotelTivago
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["Role"] == null || Session["Role"].ToString() != "receptionist")
+            {
+                Response.Redirect("login.aspx");
+                return;
+            }
+
             if (!IsPostBack)
                 LoadReservations();
         }
@@ -56,7 +62,7 @@ namespace HotelTivago
                     "INSERT INTO reservations(username, arrival, departure, room_type) VALUES(@u, @a, @d, @r)", conn))
                 {
                     cmd.Parameters.AddWithValue("@u", txtNewUsername.Text);
-                    cmd.Parameters.AddWithValue("@a", txtNewArrival.Text);   // ← ARREGLADO
+                    cmd.Parameters.AddWithValue("@a", txtNewArrival.Text);
                     cmd.Parameters.AddWithValue("@d", txtNewDeparture.Text);
                     cmd.Parameters.AddWithValue("@r", txtNewRoom.Text);
 
@@ -65,6 +71,28 @@ namespace HotelTivago
             }
 
             LoadReservations();
+        }
+
+        protected void btnCreateClient_Click(object sender, EventArgs e)
+        {
+            string username = txtNewClientUser.Text;
+            string passwordMD5 = PasswordMD5.Hash(txtNewClientPass.Text);
+
+            string DBpath = Server.MapPath("~/bbdd/hoteltrivago.db");
+
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;"))
+            {
+                conn.Open();
+
+                using (SQLiteCommand cmd = new SQLiteCommand(
+                    "INSERT INTO users(username, profile, password) VALUES(@u, 'client', @p)", conn))
+                {
+                    cmd.Parameters.AddWithValue("@u", username);
+                    cmd.Parameters.AddWithValue("@p", passwordMD5);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         protected void gvReservations_RowEditing(object sender, GridViewEditEventArgs e)

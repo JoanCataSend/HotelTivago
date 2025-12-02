@@ -13,55 +13,54 @@ namespace HotelTivago
         {
             string DBpath = Server.MapPath("~/bbdd/hoteltrivago.db");
 
-            SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;");
-            conn.Open();
-
-            try
+            using (SQLiteConnection conn = new SQLiteConnection("Data Source=" + DBpath + ";Version=3;"))
             {
-                SQLiteCommand cmd = new SQLiteCommand("SELECT profile, password FROM users WHERE username=@u", conn);
-                cmd.Parameters.AddWithValue("@u", txtUser.Text);
+                conn.Open();
 
-                SQLiteDataReader r = cmd.ExecuteReader();
-
-                bool loginCorrecto = false;
-
-                if (r.Read())
+                try
                 {
-                    string role = r.GetString(0);
-                    string storedPassword = r.GetString(1);
-
-                    if (storedPassword == txtPass.Text)
+                    using (SQLiteCommand cmd = new SQLiteCommand("SELECT profile, password FROM users WHERE username=@u", conn))
                     {
-                        loginCorrecto = true;
+                        cmd.Parameters.AddWithValue("@u", txtUser.Text);
 
-                        Session["Username"] = txtUser.Text;
-                        Session["Role"] = role;
-
-                        if (role == "receptionist")
+                        using (SQLiteDataReader r = cmd.ExecuteReader())
                         {
-                            Response.Redirect("receptionist.aspx");
-                        }
+                            if (r.Read())
+                            {
+                                string role = r.GetString(0);
+                                string storedPassword = r.GetString(1);
 
-                        if (role == "client")
-                        {
-                            Response.Redirect("client.aspx");
+                                // Convertir password escrita a MD5
+                                string md5Input = PasswordMD5.Hash(txtPass.Text);
+
+                                if (storedPassword == md5Input)
+                                {
+                                    Session["Username"] = txtUser.Text;
+                                    Session["Role"] = role;
+
+                                    if (role == "receptionist")
+                                    {
+                                        Response.Redirect("receptionist.aspx");
+                                        return;
+                                    }
+
+                                    if (role == "client")
+                                    {
+                                        Response.Redirect("client.aspx");
+                                        return;
+                                    }
+                                }
+                            }
                         }
                     }
-                }
 
-                r.Close();
-
-                if (!loginCorrecto)
-                {
                     lblError.Text = "Invalid username or password.";
                 }
+                catch (Exception ex)
+                {
+                    lblError.Text = "Error: " + ex.Message;
+                }
             }
-            catch (Exception ex)
-            {
-                lblError.Text = "Error: " + ex.Message;
-            }
-
-            conn.Close();
         }
     }
 }
