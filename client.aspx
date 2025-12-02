@@ -2,94 +2,108 @@
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head runat="server">
-    <meta charset="utf-8" />
-    <title>My Reservations</title>
+<meta charset="utf-8" />
+<title>My Profile - HotelTivago</title>
 
-    <style>
+<style>
 
-        body {
-            background: #eef2f3;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+body {
+    background: #eef2f3;
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+}
 
-        .client-container {
-            max-width: 850px;
-            margin: 40px auto;
-            background: #ffffff;
-            padding: 35px;
-            border-radius: 14px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
-        }
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.15);
+}
 
-        .title {
-            font-size: 32px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            text-align: center;
-            color: #333;
-        }
+h1 {
+    color: #2c64c9;
+    text-align: center;
+}
 
-        .subtitle {
-            font-size: 18px;
-            text-align: center;
-            margin-bottom: 25px;
-            color: #666;
-        }
+.section-title {
+    color: #2c64c9;
+    font-size: 22px;
+    margin-top: 25px;
+}
 
-        /* TABLE STYLE */
-        .table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
+.info-box {
+    background: #f6f8fa;
+    padding: 20px;
+    border-radius: 12px;
+}
 
-        .table th {
-            background: #4a8ef0;
-            color: white;
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: center;
-            font-weight: bold;
-        }
+label {
+    font-weight: bold;
+    color: #333;
+}
 
-        .table td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
-            background: #fff;
-        }
+.value {
+    padding: 4px 0 14px 0;
+    display: block;
+    font-size: 15px;
+}
 
-        .table tr:nth-child(even) td {
-            background: #f7f9fb;
-        }
+.grid {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
 
-        .table tr:hover td {
-            background: #e9f2ff;
-        }
+.grid th {
+    background: #000;
+    color: white;
+    padding: 10px;
+}
 
-    </style>
+.grid td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+</style>
 </head>
 
 <body>
-
 <form id="form1" runat="server">
-    <div class="client-container">
 
-        <h1 class="title">Welcome!</h1>
-        <p class="subtitle">These are your reservations</p>
+<div class="container">
 
-        <asp:GridView 
-            ID="gvClientReservations" 
-            runat="server" 
-            AutoGenerateColumns="True" 
-            CssClass="table">
-        </asp:GridView>
+<h1>My Profile</h1>
 
-    </div>
+<h2 class="section-title">Personal Information</h2>
+
+<div class="info-box">
+    <label>Username:</label> <span class="value"><asp:Label ID="lblUsername" runat="server"></asp:Label></span>
+    <label>ID Number:</label> <span class="value"><asp:Label ID="lblID" runat="server"></asp:Label></span>
+    <label>Name:</label> <span class="value"><asp:Label ID="lblName" runat="server"></asp:Label></span>
+    <label>Date of Birth:</label> <span class="value"><asp:Label ID="lblDOB" runat="server"></asp:Label></span>
+    <label>Address:</label> <span class="value"><asp:Label ID="lblAddress" runat="server"></asp:Label></span>
+    <label>Mobile:</label> <span class="value"><asp:Label ID="lblMobile" runat="server"></asp:Label></span>
+</div>
+
+<h2 class="section-title">My Reservations</h2>
+
+<asp:GridView ID="gvClientReservations" runat="server" AutoGenerateColumns="False" CssClass="grid">
+<Columns>
+    <asp:BoundField DataField="reservation_id" HeaderText="ID" />
+    <asp:BoundField DataField="arrival" HeaderText="Arrival" />
+    <asp:BoundField DataField="departure" HeaderText="Departure" />
+    <asp:BoundField DataField="room_type" HeaderText="Room Type" />
+</Columns>
+</asp:GridView>
+
+</div>
+
 </form>
-
 </body>
 </html>

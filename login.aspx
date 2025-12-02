@@ -2,139 +2,81 @@
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head runat="server">
-    <meta charset="utf-8" />
-    <title>HotelTrivago - Login</title>
-    <style>
+<meta charset="utf-8" />
+<title>Login - HotelTivago</title>
 
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #4a8ef0, #6bb4ff);
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #4a8ef0, #6bb4ff);
+    font-family: Arial, sans-serif;
+}
 
-        .login-wrapper {
-            width: 360px;
-            background: #ffffff;
-            padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.25);
-            animation: fadeIn 0.8s ease;
-        }
+.login-container {
+    width: 380px;
+    margin: 120px auto;
+    background: #ffffffee;
+    padding: 35px;
+    border-radius: 14px;
+    text-align: center;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.25);
+}
 
-        .login-title {
-            font-size: 28px;
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #333;
-        }
+h2 {
+    color: #2c64c9;
+    margin-bottom: 25px;
+}
 
-        .login-subtitle {
-            text-align: center;
-            font-size: 15px;
-            color: #555;
-            margin-bottom: 25px;
-        }
+.input-text {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
 
-        .input-text {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            font-size: 15px;
-            outline: none;
-            transition: 0.2s ease-in-out;
-        }
+.btn {
+    width: 100%;
+    background: #2c64c9;
+    color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
 
-        .input-text:focus {
-            border-color: #4a8ef0;
-            box-shadow: 0 0 6px rgba(74,142,240,0.4);
-        }
+.btn:hover {
+    background: #1e4d99;
+}
 
-        .btn-primary {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            background: #4a8ef0;
-            border: none;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.2s ease-in-out;
-        }
+.error {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+</style>
 
-        .btn-primary:hover {
-            background: #3a78d6;
-        }
-
-        .error-label {
-            color: red;
-            font-size: 14px;
-            margin-top: 10px;
-            display: block;
-            text-align: center;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-    </style>
 </head>
 
 <body>
-
 <form id="form1" runat="server">
 
-    <div class="login-wrapper">
+<div class="login-container">
+    <h2>Login</h2>
 
-        <h1 class="login-title">Login</h1>
-        <p class="login-subtitle">Access your HotelTrivago account</p>
+    <asp:TextBox ID="txtUser" runat="server" CssClass="input-text" placeholder="Username"></asp:TextBox>
+    <asp:TextBox ID="txtPass" runat="server" CssClass="input-text" TextMode="Password" placeholder="Password"></asp:TextBox>
 
-        <!-- Username -->
-        <asp:TextBox 
-            ID="txtUser" 
-            runat="server" 
-            CssClass="input-text" 
-            placeholder="Username">
-        </asp:TextBox>
+    <asp:Button ID="btnLogin" runat="server" Text="Log in" CssClass="btn" OnClick="btnLogin_Click" />
 
-        <!-- Password -->
-        <asp:TextBox 
-            ID="txtPass" 
-            runat="server" 
-            CssClass="input-text" 
-            TextMode="Password" 
-            placeholder="Password">
-        </asp:TextBox>
-
-        <!-- Login button -->
-        <asp:Button 
-            ID="btnLogin" 
-            runat="server" 
-            Text="Log In" 
-            CssClass="btn-primary" 
-            OnClick="btnLogin_Click" />
-
-        <!-- Error message -->
-        <asp:Label 
-            ID="lblError" 
-            runat="server" 
-            CssClass="error-label">
-        </asp:Label>
-
-    </div>
+    <asp:Label ID="lblError" runat="server" CssClass="error"></asp:Label>
+</div>
 
 </form>
-
 </body>
+
 </html>

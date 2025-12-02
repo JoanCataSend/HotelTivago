@@ -24,24 +24,6 @@ namespace HotelTivago
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// txtSearchUser control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtSearchUser;
-
-        /// <summary>
-        /// btnSearch control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearch;
-
-        /// <summary>
         /// gvReservations control.
         /// </summary>
         /// <remarks>
@@ -51,67 +33,112 @@ namespace HotelTivago
         protected global::System.Web.UI.WebControls.GridView gvReservations;
 
         /// <summary>
-        /// txtNewUsername control.
+        /// txtRUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNewUsername;
+        protected global::System.Web.UI.WebControls.TextBox txtRUser;
 
         /// <summary>
-        /// txtNewArrival control.
+        /// txtRArrival control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNewArrival;
+        protected global::System.Web.UI.WebControls.TextBox txtRArrival;
 
         /// <summary>
-        /// txtNewDeparture control.
+        /// txtRDeparture control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNewDeparture;
+        protected global::System.Web.UI.WebControls.TextBox txtRDeparture;
 
         /// <summary>
-        /// txtNewRoom control.
+        /// txtRRoom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNewRoom;
+        protected global::System.Web.UI.WebControls.TextBox txtRRoom;
 
         /// <summary>
-        /// btnCreate control.
+        /// btnCreateReservation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCreate;
+        protected global::System.Web.UI.WebControls.Button btnCreateReservation;
 
         /// <summary>
-        /// txtNewClientUser control.
+        /// gvClients control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNewClientUser;
+        protected global::System.Web.UI.WebControls.GridView gvClients;
 
         /// <summary>
-        /// txtNewClientPass control.
+        /// txtCUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNewClientPass;
+        protected global::System.Web.UI.WebControls.TextBox txtCUsername;
+
+        /// <summary>
+        /// txtCPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCPassword;
+
+        /// <summary>
+        /// txtCName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCName;
+
+        /// <summary>
+        /// txtCDOB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCDOB;
+
+        /// <summary>
+        /// txtCAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCAddress;
+
+        /// <summary>
+        /// txtCMobile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCMobile;
 
         /// <summary>
         /// btnCreateClient control.
