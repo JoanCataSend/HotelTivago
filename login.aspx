@@ -5,10 +5,6 @@
 <head runat="server">
     <meta charset="utf-8" />
     <title>HotelTrivago - Login</title>
-
-    <!-- ============================
-         MODERN LOGIN CSS
-         ============================ -->
     <style>
 
         body {
