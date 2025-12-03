@@ -27,9 +27,6 @@ namespace HotelTivago
         private SQLiteConnection Conn() =>
             new SQLiteConnection("Data Source=" + DBPath + ";Version=3;");
 
-        // ============================
-        // LOAD RESERVATIONS
-        // ============================
         private void LoadReservations(string search = "")
         {
             using (var c = Conn())
@@ -53,9 +50,6 @@ namespace HotelTivago
             }
         }
 
-        // ============================
-        // LOAD CLIENTS
-        // ============================
         private void LoadClients(string search = "")
         {
             using (var c = Conn())
@@ -79,9 +73,6 @@ namespace HotelTivago
             }
         }
 
-        // ============================
-        // CREATE RESERVATION
-        // ============================
         protected void btnCreateReservation_Click(object sender, EventArgs e)
         {
             if (!ValidationRules.IsValidDate(txtRArrival.Text) ||
@@ -182,9 +173,6 @@ namespace HotelTivago
             LoadReservations();
         }
 
-        // ============================
-        // CREATE CLIENT
-        // ============================
         protected void btnCreateClient_Click(object sender, EventArgs e)
         {
             if (!ValidationRules.IsValidUsername(txtCUsername.Text) ||
@@ -294,9 +282,6 @@ namespace HotelTivago
             LoadClients();
         }
 
-        // ============================
-        // ERROR HANDLING
-        // ============================
         private void ShowError(string message)
         {
             if (lblError != null)
@@ -307,6 +292,13 @@ namespace HotelTivago
         {
             if (lblError != null)
                 lblError.Text = "";
+        }
+
+        protected void btnLogout_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
+            Session.Abandon();
+            Response.Redirect("login.aspx");
         }
     }
 }

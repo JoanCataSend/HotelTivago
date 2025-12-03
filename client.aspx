@@ -36,7 +36,6 @@ h1 {
     margin-top:30px;
 }
 
-/* Caja de información */
 .section-box {
     background:#758fa863;
     padding:20px;
@@ -57,7 +56,6 @@ label {
     font-size:16px;
 }
 
-/* TABLAS idénticas a receptionist */
 .grid {
     width:100%;
     border-collapse:collapse;
@@ -82,6 +80,22 @@ label {
     transition:0.2s;
 }
 
+.btnLogout {
+    background:#b33a3a;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    float:right;
+    margin-bottom:20px;
+    font-size:15px;
+}
+
+.btnLogout:hover {
+    background:#992f2f;
+}
+
 </style>
 
 </head>
@@ -90,6 +104,8 @@ label {
 <form id="form1" runat="server">
 
 <div class="container">
+
+<asp:Button ID="btnLogout" runat="server" Text="Logout" CssClass="btnLogout" OnClick="btnLogout_Click" />
 
 <h1>My Profile</h1>
 

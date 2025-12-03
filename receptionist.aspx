@@ -115,6 +115,22 @@ h1 {
     background:#f0f5ff;
     transition:0.2s;
 }
+
+.btnLogout {
+    background:#b33a3a;
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    float:right;
+    margin-bottom:20px;
+    font-size:15px;
+}
+
+.btnLogout:hover {
+    background:#992f2f;
+}
 </style>
 </head>
 
@@ -122,20 +138,19 @@ h1 {
 <form id="form1" runat="server">
 <div class="container">
 
+<asp:Button ID="btnLogout" runat="server" Text="Logout" CssClass="btnLogout" OnClick="btnLogout_Click" />
+
 <h1>Receptionist Panel</h1>
 
-<!-- 🔴 ERROR LABEL -->
 <asp:Label ID="lblError" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
 <br /><br />
 
-<!-- 🔵 SEARCH RESERVATIONS -->
 <h2 class="title">Search reservations</h2>
 <div class="search-box">
     <asp:TextBox ID="txtSearchReservations" runat="server" CssClass="input-text" placeholder="Search reservations by username"></asp:TextBox>
     <asp:Button ID="btnSearchReservations" runat="server" Text="Search" CssClass="btn" OnClick="btnSearchReservations_Click" />
 </div>
 
-<!-- GRID RESERVATIONS -->
 <h2 class="title">Manage hotel reservations</h2>
 
 <asp:GridView ID="gvReservations" runat="server" AutoGenerateColumns="False" CssClass="grid"
@@ -165,14 +180,12 @@ h1 {
     <asp:Button ID="btnCreateReservation" runat="server" Text="Create reservation" CssClass="btn" OnClick="btnCreateReservation_Click" />
 </div>
 
-<!-- 🟢 SEARCH USERS -->
 <h2 class="title">Search users</h2>
 <div class="search-box">
     <asp:TextBox ID="txtSearchUsers" runat="server" CssClass="input-text" placeholder="Search users by username or name"></asp:TextBox>
     <asp:Button ID="btnSearchUsers" runat="server" Text="Search" CssClass="btn" OnClick="btnSearchUsers_Click" />
 </div>
 
-<!-- GRID USERS -->
 <h2 class="title">Manage hotel clients</h2>
 
 <asp:GridView ID="gvClients" runat="server" AutoGenerateColumns="False" CssClass="grid"
