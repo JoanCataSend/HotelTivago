@@ -2,7 +2,6 @@
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-
 <head runat="server">
 <meta charset="utf-8" />
 <title>My Profile - HotelTivago</title>
@@ -10,67 +9,81 @@
 <style>
 
 body {
-    background: #eef2f3;
+    background: url('images/h4.jpg') center/cover no-repeat;
     margin: 0;
     padding: 0;
-    font-family: Arial;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .container {
     max-width: 900px;
-    margin: 40px auto;
-    background: #fff;
+    margin: 30px auto;
     padding: 30px;
-    border-radius: 14px;
-    box-shadow: 0 5px 18px rgba(0,0,0,0.15);
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.15);
 }
 
-h1 {
-    color: #2c64c9;
-    text-align: center;
+h1 { 
+    text-align:center; 
+    color:#2c64c9; 
+    font-weight:700;
 }
 
-.section-title {
-    color: #2c64c9;
-    font-size: 22px;
-    margin-top: 25px;
+.title { 
+    color:#2c64c9; 
+    font-size:22px; 
+    margin-top:30px;
 }
 
-.info-box {
-    background: #f6f8fa;
-    padding: 20px;
-    border-radius: 12px;
+/* Caja de información */
+.section-box {
+    background:#758fa863;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    border:1px solid #e3e9f5;
+    box-shadow:0 3px 12px rgba(0,0,0,0.05);
 }
 
 label {
-    font-weight: bold;
-    color: #333;
+    font-weight:bold;
+    color:#333;
 }
 
 .value {
-    padding: 4px 0 14px 0;
-    display: block;
-    font-size: 15px;
+    display:block;
+    margin-bottom:14px;
+    font-size:16px;
 }
 
+/* TABLAS idénticas a receptionist */
 .grid {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
 }
 
 .grid th {
-    background: #000;
-    color: white;
-    padding: 10px;
+    background:#758fa8;
+    color:white;
+    padding:12px;
+    border:1px solid #ddd;
 }
 
 .grid td {
-    padding: 10px;
-    border: 1px solid #ddd;
+    background:white;
+    padding:10px;
+    border:1px solid #bcd3f9;
+}
+
+.grid tr:hover td {
+    background:#f0f5ff;
+    transition:0.2s;
 }
 
 </style>
+
 </head>
 
 <body>
@@ -80,9 +93,9 @@ label {
 
 <h1>My Profile</h1>
 
-<h2 class="section-title">Personal Information</h2>
+<h2 class="title">Personal Information</h2>
 
-<div class="info-box">
+<div class="section-box">
     <label>Username:</label> <span class="value"><asp:Label ID="lblUsername" runat="server"></asp:Label></span>
     <label>ID Number:</label> <span class="value"><asp:Label ID="lblID" runat="server"></asp:Label></span>
     <label>Name:</label> <span class="value"><asp:Label ID="lblName" runat="server"></asp:Label></span>
@@ -91,7 +104,7 @@ label {
     <label>Mobile:</label> <span class="value"><asp:Label ID="lblMobile" runat="server"></asp:Label></span>
 </div>
 
-<h2 class="section-title">My Reservations</h2>
+<h2 class="title">My Reservations</h2>
 
 <asp:GridView ID="gvClientReservations" runat="server" AutoGenerateColumns="False" CssClass="grid">
 <Columns>

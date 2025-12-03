@@ -8,39 +8,81 @@
 
 <style>
 body {
-    background: #eef2f3;
+    background: url('images/h4.jpg') center/cover no-repeat;
     margin: 0;
     padding: 0;
-    font-family: Arial;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
 .container {
     max-width: 1100px;
     margin: 30px auto;
     padding: 30px;
-    background: #fff;
+    background: #ffffff;
     border-radius: 16px;
     box-shadow: 0 5px 25px rgba(0,0,0,0.15);
 }
 
-h1 { text-align:center; color:#2c64c9; }
-.title { color:#2c64c9; font-size:22px; }
+h1 { 
+    text-align:center; 
+    color:#2c64c9; 
+    font-weight:700;
+}
+
+.title { 
+    color:#2c64c9; 
+    font-size:22px; 
+    margin-top:30px;
+}
+
+.search-box {
+    margin-bottom:15px;
+    background:#f7f9fc;
+    padding:15px;
+    border-radius:12px;
+    border:1px solid #e3e9f5;
+}
 
 .input-text {
-    width:100%; padding:12px; margin-bottom:10px;
-    border-radius:8px; border:1px solid #ccc; font-size:15px;
+    width:95%;
+    padding:12px;
+    margin-bottom:12px;
+    border-radius:10px;
+    border:2px solid #d7e2f5;
+    background:white;
+    font-size:15px;
+}
+
+.input-text:focus {
+    border-color:#2c64c9;
+    box-shadow:0 0 8px rgba(44,100,201,0.3);
+    outline:none;
 }
 
 .btn {
-    background:#000; color:#fff;
-    padding:10px 18px; border-radius:8px;
-    border:none; cursor:pointer; font-size:15px;
+    background:#758fa8;
+    color:white;
+    padding:12px 22px;
+    border-radius:10px;
+    border:none;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:bold;
+    transition:0.25s ease;
+    box-shadow:0 3px 10px rgba(44,100,201,0.3);
 }
-.btn:hover { opacity:0.8; }
+
+.btn:hover {
+    transform:translateY(-2px);
+    box-shadow:0 5px 14px rgba(44,100,201,0.45);
+}
 
 .section-box {
-    background:#f2f5f7; padding:20px;
-    border-radius:12px; margin-bottom:20px;
+    background:#f7f9fc;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    border:1px solid #e3e9f5;
 }
 
 .grid {
@@ -48,11 +90,30 @@ h1 { text-align:center; color:#2c64c9; }
     border-collapse:collapse;
     margin-top:10px;
 }
+
 .grid th {
-    background:#000; color:white; padding:10px; border:1px solid #ddd;
+    background:#758fa8;
+    color:white;
+    padding:12px;
+    border:1px solid #ddd;
 }
+
 .grid td {
-    padding:10px; border:1px solid #ddd;
+    background:white;
+    padding:10px;
+    border:1px solid #bcd3f9;
+}
+
+.grid a {
+    color:#2c64c9;
+    font-weight:bold;
+    text-decoration:none;
+    margin-right:12px;
+}
+
+.grid tr:hover td {
+    background:#f0f5ff;
+    transition:0.2s;
 }
 </style>
 </head>
@@ -63,7 +124,18 @@ h1 { text-align:center; color:#2c64c9; }
 
 <h1>Receptionist Panel</h1>
 
+<!-- 🔴 ERROR LABEL -->
+<asp:Label ID="lblError" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
+<br /><br />
 
+<!-- 🔵 SEARCH RESERVATIONS -->
+<h2 class="title">Search reservations</h2>
+<div class="search-box">
+    <asp:TextBox ID="txtSearchReservations" runat="server" CssClass="input-text" placeholder="Search reservations by username"></asp:TextBox>
+    <asp:Button ID="btnSearchReservations" runat="server" Text="Search" CssClass="btn" OnClick="btnSearchReservations_Click" />
+</div>
+
+<!-- GRID RESERVATIONS -->
 <h2 class="title">Manage hotel reservations</h2>
 
 <asp:GridView ID="gvReservations" runat="server" AutoGenerateColumns="False" CssClass="grid"
@@ -81,22 +153,26 @@ h1 { text-align:center; color:#2c64c9; }
     <asp:BoundField DataField="room_type" HeaderText="Room Type" />
     <asp:CommandField ShowEditButton="true" EditText="Edit" ShowDeleteButton="true" DeleteText="Delete" />
 </Columns>
-
 </asp:GridView>
-
-
 
 <h3 class="title">Create new reservation</h3>
 <div class="section-box">
     <asp:TextBox ID="txtRUser" runat="server" CssClass="input-text" placeholder="Username"></asp:TextBox>
-    <asp:TextBox ID="txtRArrival" runat="server" CssClass="input-text" placeholder="Arrival"></asp:TextBox>
-    <asp:TextBox ID="txtRDeparture" runat="server" CssClass="input-text" placeholder="Departure"></asp:TextBox>
+    <asp:TextBox ID="txtRArrival" runat="server" CssClass="input-text" placeholder="Arrival (dd/mm/aaaa)"></asp:TextBox>
+    <asp:TextBox ID="txtRDeparture" runat="server" CssClass="input-text" placeholder="Departure (dd/mm/aaaa)"></asp:TextBox>
     <asp:TextBox ID="txtRRoom" runat="server" CssClass="input-text" placeholder="Room type"></asp:TextBox>
 
     <asp:Button ID="btnCreateReservation" runat="server" Text="Create reservation" CssClass="btn" OnClick="btnCreateReservation_Click" />
 </div>
 
+<!-- 🟢 SEARCH USERS -->
+<h2 class="title">Search users</h2>
+<div class="search-box">
+    <asp:TextBox ID="txtSearchUsers" runat="server" CssClass="input-text" placeholder="Search users by username or name"></asp:TextBox>
+    <asp:Button ID="btnSearchUsers" runat="server" Text="Search" CssClass="btn" OnClick="btnSearchUsers_Click" />
+</div>
 
+<!-- GRID USERS -->
 <h2 class="title">Manage hotel clients</h2>
 
 <asp:GridView ID="gvClients" runat="server" AutoGenerateColumns="False" CssClass="grid"
@@ -108,15 +184,14 @@ h1 { text-align:center; color:#2c64c9; }
 
 <Columns>
     <asp:BoundField DataField="username" HeaderText="Username" ReadOnly="true" />
-    <asp:BoundField DataField="profile" HeaderText="Profile" />
-    <asp:BoundField DataField="id_number" HeaderText="ID Number" />
+    <asp:BoundField DataField="profile" HeaderText="Profile" ReadOnly="true" />
+    <asp:BoundField DataField="id_number" HeaderText="ID Number" ReadOnly="true" />
     <asp:BoundField DataField="name" HeaderText="Name" />
     <asp:BoundField DataField="dob" HeaderText="DOB" />
     <asp:BoundField DataField="address" HeaderText="Address" />
     <asp:BoundField DataField="mobile" HeaderText="Mobile" />
     <asp:CommandField ShowEditButton="true" EditText="Edit" ShowDeleteButton="true" DeleteText="Delete" />
 </Columns>
-
 </asp:GridView>
 
 <h3 class="title">Create new client</h3>
@@ -125,7 +200,7 @@ h1 { text-align:center; color:#2c64c9; }
     <asp:TextBox ID="txtCUsername" runat="server" CssClass="input-text" placeholder="Username"></asp:TextBox>
     <asp:TextBox ID="txtCPassword" runat="server" CssClass="input-text" placeholder="Password"></asp:TextBox>
     <asp:TextBox ID="txtCName" runat="server" CssClass="input-text" placeholder="Name"></asp:TextBox>
-    <asp:TextBox ID="txtCDOB" runat="server" CssClass="input-text" placeholder="DOB"></asp:TextBox>
+    <asp:TextBox ID="txtCDOB" runat="server" CssClass="input-text" placeholder="DOB (dd/mm/aaaa)"></asp:TextBox>
     <asp:TextBox ID="txtCAddress" runat="server" CssClass="input-text" placeholder="Address"></asp:TextBox>
     <asp:TextBox ID="txtCMobile" runat="server" CssClass="input-text" placeholder="Mobile"></asp:TextBox>
 

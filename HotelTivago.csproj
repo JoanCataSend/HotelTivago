@@ -84,6 +84,11 @@
     <Content Include="Images\1.png" />
     <Content Include="Images\2.png" />
     <Content Include="client.aspx" />
+    <Content Include="Images\h1.jpg" />
+    <Content Include="Images\h2.jpg" />
+    <Content Include="Images\h3.jpg" />
+    <Content Include="Images\h4.jpg" />
+    <Content Include="Images\tivago.png" />
     <Content Include="index.aspx" />
     <Content Include="login.aspx" />
     <Content Include="receptionist.aspx" />
@@ -111,6 +116,7 @@
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models.cs" />
     <Compile Include="PasswordMD5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="receptionist.aspx.cs">
