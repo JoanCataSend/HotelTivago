@@ -21,6 +21,8 @@
     <asp:TextBox ID="txtPass" runat="server" CssClass="input-text" TextMode="Password" placeholder="Password"></asp:TextBox>
 
     <asp:Button ID="btnLogin" runat="server" Text="Entrar" CssClass="btn" OnClick="btnLogin_Click" />
+
+    <asp:Button ID="btnBack" runat="server" Text="Back to Home" CssClass="btnBack" OnClick="btnBack_Click" />
     <br />
     <asp:Label ID="lblError" runat="server" CssClass="error"></asp:Label>
 </div>

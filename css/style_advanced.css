@@ -298,6 +298,28 @@ footer {
 /* ============================================================
    LOGIN PAGE
    ============================================================ */
+.btnBack {
+    width: 85%;
+    background: transparent;
+    color: var(--color-white);
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: var(--radius-medium);
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition-normal);
+}
+
+    .btnBack:hover {
+        background: rgba(255,255,255,0.25);
+        transform: translateY(-3px);
+    }
+
+
+
+
 .login-container {
     width: 370px;
     background: rgba(255,255,255,0.38);
@@ -339,16 +361,17 @@ footer {
     box-shadow: var(--shadow-soft);
 }
 
-    .btn:hover {
+.btn:hover {
         transform: translateY(-3px);
         background: var(--color-primary-dark);
-    }
+ }
 
 .error {
     color: #e40000;
     margin-top: 12px;
     font-weight: 700;
 }
+
 
 /* ============================================================
    CLIENT & RECEPTIONIST SHARED

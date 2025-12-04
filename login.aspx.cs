@@ -66,5 +66,9 @@ namespace HotelTivago.Pages
                     Response.Redirect("client.aspx");
             }
         }
+        protected void btnBack_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("index.aspx");
+        }
     }
 }
