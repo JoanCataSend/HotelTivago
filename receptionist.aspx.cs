@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SQLite;
 using System.Web.UI.WebControls;
-using HotelTivago.Classes;   // ⭐ IMPORTANTE
+using HotelTivago.Classes;
 
 namespace HotelTivago.Pages
 {
@@ -70,7 +70,7 @@ namespace HotelTivago.Pages
             if (!ValidationRules.IsValidDate(txtRArrival.Text) ||
                 !ValidationRules.IsValidDate(txtRDeparture.Text))
             {
-                ShowError("Dates must be dd/mm/aaaa.");
+                ShowError("Dates must be dd/mm/yyyy.");
                 return;
             }
 
@@ -83,8 +83,6 @@ namespace HotelTivago.Pages
             using (var c = db.GetConnection())
             {
                 c.Open();
-
-                // 1️⃣ CHECK IF USER EXISTS
                 var checkUser = new SQLiteCommand(
                     "SELECT COUNT(*) FROM users WHERE username=@u", c);
                 checkUser.Parameters.AddWithValue("@u", txtRUser.Text.Trim());
@@ -96,8 +94,6 @@ namespace HotelTivago.Pages
                     ShowError("The username does not exist. You must enter a valid user.");
                     return;
                 }
-
-                // 2️⃣ CREATE RESERVATION
                 var cmd = new SQLiteCommand(
                     "INSERT INTO reservations(username, arrival, departure, room_type) " +
                     "VALUES(@u,@a,@d,@r)", c);
@@ -135,8 +131,7 @@ namespace HotelTivago.Pages
         {
             int id = Convert.ToInt32(gvReservations.DataKeys[e.RowIndex].Value);
             GridViewRow row = gvReservations.Rows[e.RowIndex];
-
-            TextBox txtUser = row.Cells[1].Controls[0] as TextBox;
+            string username = row.Cells[1].Text.Trim();
             TextBox txtArrival = row.Cells[2].Controls[0] as TextBox;
             TextBox txtDeparture = row.Cells[3].Controls[0] as TextBox;
             TextBox txtRoom = row.Cells[4].Controls[0] as TextBox;
@@ -156,7 +151,7 @@ namespace HotelTivago.Pages
                     "UPDATE reservations SET username=@u, arrival=@a, departure=@d, room_type=@r " +
                     "WHERE reservation_id=@id", c);
 
-                cmd.Parameters.AddWithValue("@u", txtUser.Text.Trim());
+                cmd.Parameters.AddWithValue("@u", username);
                 cmd.Parameters.AddWithValue("@a", txtArrival.Text.Trim());
                 cmd.Parameters.AddWithValue("@d", txtDeparture.Text.Trim());
                 cmd.Parameters.AddWithValue("@r", txtRoom.Text.Trim());

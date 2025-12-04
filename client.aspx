@@ -5,8 +5,6 @@
 <head runat="server">
     <meta charset="utf-8" />
     <title>My Profile - Hotel Tivago</title>
-
-    <!-- CSS PREMIUM -->
     <link rel="stylesheet" href="css/style_advanced.css" />
 </head>
 
@@ -14,15 +12,9 @@
 <form id="form1" runat="server">
 
 <div class="container">
-
-    <!-- LOGOUT BUTTON -->
     <asp:Button ID="btnLogout" runat="server" Text="Logout" CssClass="btnLogout" OnClick="btnLogout_Click" />
 
     <h1>My Profile</h1>
-
-    <!-- ============================
-         PERSONAL INFORMATION
-    ============================= -->
     <h2 class="title">Personal Information</h2>
 
     <div class="section-box">
@@ -41,10 +33,6 @@
         <label>Mobile:</label> 
         <span class="value"><asp:Label ID="lblMobile" runat="server" /></span>
     </div>
-
-    <!-- ============================
-         RESERVATIONS GRID
-    ============================= -->
     <h2 class="title">My Reservations</h2>
 
     <asp:GridView ID="gvClientReservations" runat="server" AutoGenerateColumns="False" CssClass="grid">

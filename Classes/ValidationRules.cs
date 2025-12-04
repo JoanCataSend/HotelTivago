@@ -10,7 +10,6 @@ namespace HotelTivago.Classes
         public const string AddressPattern = @"^[A-Za-z0-9ÁÉÍÓÚÜÑáéíóúüñ\s\.,\-]{5,80}$";
         public const string MobilePattern = @"^[679][0-9]{8}$";
         public const string EmailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-        public const string RoomTypePattern = @"^(simple|doble|suite)$";
 
         public static bool IsValidUsername(string username) => Regex.IsMatch(username, UsernamePattern);
         public static bool IsValidName(string name) => Regex.IsMatch(name, NamePattern);
@@ -18,6 +17,5 @@ namespace HotelTivago.Classes
         public static bool IsValidAddress(string address) => Regex.IsMatch(address, AddressPattern);
         public static bool IsValidMobile(string mobile) => Regex.IsMatch(mobile, MobilePattern);
         public static bool IsValidEmail(string email) => Regex.IsMatch(email, EmailPattern);
-        public static bool IsValidRoomType(string room) => Regex.IsMatch(room, RoomTypePattern);
     }
 }

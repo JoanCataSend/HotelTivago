@@ -51,12 +51,12 @@
 
     <div class="room-card">
         <img src="Images/h2.jpg" class="room-img" />
-        <p class="room-name">Double Room</p>
+        <p class="room-name">Normal Room</p>
     </div>
 
     <div class="room-card">
         <img src="Images/h3.jpg" class="room-img" />
-        <p class="room-name">Family Room</p>
+        <p class="room-name">Double Room</p>
     </div>
 </div>
 

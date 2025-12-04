@@ -14,13 +14,13 @@
 <form id="form1" runat="server">
 
 <div class="login-container">
-    <h2>Login</h2>
+    <h2>Login Tivago</h2>
 
     <asp:TextBox ID="txtUser" runat="server" CssClass="input-text" placeholder="Username"></asp:TextBox>
 
     <asp:TextBox ID="txtPass" runat="server" CssClass="input-text" TextMode="Password" placeholder="Password"></asp:TextBox>
 
-    <asp:Button ID="btnLogin" runat="server" Text="Entrar" CssClass="btn" OnClick="btnLogin_Click" />
+    <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn" OnClick="btnLogin_Click" />
 
     <asp:Button ID="btnBack" runat="server" Text="Back to Home" CssClass="btnBack" OnClick="btnBack_Click" />
     <br />

@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="receptionist.aspx.cs" Inherits="HotelTivago.Pages.receptionist" %>
 
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta charset="utf-8" />
     <title>Receptionist Panel</title>
@@ -19,18 +19,12 @@
     <asp:Label ID="lblError" runat="server" ForeColor="Red" Font-Bold="true"></asp:Label>
     <br /><br />
 
-    <!-- =======================
-         SEARCH RESERVATIONS
-    ======================= -->
     <h2 class="title">Search reservations</h2>
     <div class="search-box">
         <asp:TextBox ID="txtSearchReservations" runat="server" CssClass="input-text" placeholder="Search reservations by username"></asp:TextBox>
         <asp:Button ID="btnSearchReservations" runat="server" Text="Search" CssClass="btn" OnClick="btnSearchReservations_Click" />
     </div>
 
-    <!-- =======================
-         MANAGE RESERVATIONS
-    ======================= -->
     <h2 class="title">Manage hotel reservations</h2>
 
     <asp:GridView ID="gvReservations" runat="server" AutoGenerateColumns="False" CssClass="grid"
@@ -42,22 +36,25 @@
 
         <Columns>
             <asp:BoundField DataField="reservation_id" HeaderText="ID" ReadOnly="true" />
-            <asp:BoundField DataField="username" HeaderText="Username" />
+            <asp:BoundField DataField="username" HeaderText="Username" ReadOnly="true" />
             <asp:BoundField DataField="arrival" HeaderText="Arrival" />
             <asp:BoundField DataField="departure" HeaderText="Departure" />
             <asp:BoundField DataField="room_type" HeaderText="Room Type" />
-            <asp:CommandField ShowEditButton="true" EditText="Edit" ShowDeleteButton="true" DeleteText="Delete" />
+            <asp:CommandField
+                ShowEditButton="true"
+                EditText="Edit"
+                UpdateText="Update"
+                CancelText="Cancel"
+                ShowDeleteButton="true"
+                DeleteText="Delete" />
         </Columns>
     </asp:GridView>
 
-    <!-- =======================
-         CREATE RESERVATION
-    ======================= -->
     <h3 class="title">Create new reservation</h3>
     <div class="section-box">
         <asp:TextBox ID="txtRUser" runat="server" CssClass="input-text" placeholder="Username"></asp:TextBox>
-        <asp:TextBox ID="txtRArrival" runat="server" CssClass="input-text" placeholder="Arrival (dd/mm/aaaa)"></asp:TextBox>
-        <asp:TextBox ID="txtRDeparture" runat="server" CssClass="input-text" placeholder="Departure (dd/mm/aaaa)"></asp:TextBox>
+        <asp:TextBox ID="txtRArrival" runat="server" CssClass="input-text" placeholder="Arrival (dd/mm/yyyy)"></asp:TextBox>
+        <asp:TextBox ID="txtRDeparture" runat="server" CssClass="input-text" placeholder="Departure (dd/mm/yyyy)"></asp:TextBox>
         <asp:DropDownList ID="ddlRRoom" runat="server" CssClass="input-text">
             <asp:ListItem Text="Select room type" Value="" />
             <asp:ListItem Text="Normal" Value="Normal" />
@@ -68,18 +65,11 @@
         <asp:Button ID="btnCreateReservation" runat="server" Text="Create reservation" CssClass="btn" OnClick="btnCreateReservation_Click" />
     </div>
 
-    <!-- =======================
-         SEARCH USERS
-    ======================= -->
     <h2 class="title">Search users</h2>
     <div class="search-box">
         <asp:TextBox ID="txtSearchUsers" runat="server" CssClass="input-text" placeholder="Search users by username or name"></asp:TextBox>
         <asp:Button ID="btnSearchUsers" runat="server" Text="Search" CssClass="btn" OnClick="btnSearchUsers_Click" />
     </div>
-
-    <!-- =======================
-         MANAGE CLIENTS
-    ======================= -->
     <h2 class="title">Manage hotel clients</h2>
 
     <asp:GridView ID="gvClients" runat="server" AutoGenerateColumns="False" CssClass="grid"
@@ -96,20 +86,23 @@
             <asp:BoundField DataField="dob" HeaderText="DOB" />
             <asp:BoundField DataField="address" HeaderText="Address" />
             <asp:BoundField DataField="mobile" HeaderText="Mobile" />
-            <asp:CommandField ShowEditButton="true" EditText="Edit" ShowDeleteButton="true" DeleteText="Delete" />
+            <asp:CommandField
+                ShowEditButton="true"
+                EditText="Edit"
+                UpdateText="Update"
+                CancelText="Cancel"
+                ShowDeleteButton="true"
+                DeleteText="Delete" />
         </Columns>
     </asp:GridView>
 
-    <!-- =======================
-         CREATE CLIENT
-    ======================= -->
     <h3 class="title">Create new client</h3>
 
     <div class="section-box">
         <asp:TextBox ID="txtCUsername" runat="server" CssClass="input-text" placeholder="Username"></asp:TextBox>
         <asp:TextBox ID="txtCPassword" runat="server" CssClass="input-text" placeholder="Password"></asp:TextBox>
         <asp:TextBox ID="txtCName" runat="server" CssClass="input-text" placeholder="Name"></asp:TextBox>
-        <asp:TextBox ID="txtCDOB" runat="server" CssClass="input-text" placeholder="DOB (dd/mm/aaaa)"></asp:TextBox>
+        <asp:TextBox ID="txtCDOB" runat="server" CssClass="input-text" placeholder="DOB (dd/mm/yyyy)"></asp:TextBox>
         <asp:TextBox ID="txtCAddress" runat="server" CssClass="input-text" placeholder="Address"></asp:TextBox>
         <asp:TextBox ID="txtCMobile" runat="server" CssClass="input-text" placeholder="Mobile"></asp:TextBox>
 
