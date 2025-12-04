@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelTivago
+namespace HotelTivago.Pages
 {
 
 
@@ -40,15 +40,6 @@ namespace HotelTivago
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblUsername;
-
-        /// <summary>
-        /// lblID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblID;
 
         /// <summary>
         /// lblName control.

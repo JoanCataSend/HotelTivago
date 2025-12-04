@@ -81,9 +81,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\style.css" />
+    <Content Include="css\style_advanced.css" />
     <Content Include="Images\1.png" />
     <Content Include="Images\2.png" />
     <Content Include="client.aspx" />
+    <Content Include="Images\fondo.png" />
     <Content Include="Images\h1.jpg" />
     <Content Include="Images\h2.jpg" />
     <Content Include="Images\h3.jpg" />
@@ -95,6 +98,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Client.cs" />
+    <Compile Include="Classes\DatabaseManager.cs" />
+    <Compile Include="Classes\Reservation.cs" />
+    <Compile Include="Classes\User.cs" />
+    <Compile Include="Classes\ValidationRules.cs" />
     <Compile Include="client.aspx.cs">
       <DependentUpon>client.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -116,8 +124,7 @@
     <Compile Include="login.aspx.designer.cs">
       <DependentUpon>login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Models.cs" />
-    <Compile Include="PasswordMD5.cs" />
+    <Compile Include="Classes\PasswordMD5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="receptionist.aspx.cs">
       <DependentUpon>receptionist.aspx</DependentUpon>

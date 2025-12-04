@@ -1,45 +1,7 @@
-﻿using System.Data.SQLite;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
-namespace HotelTivago
+namespace HotelTivago.Classes
 {
-    public class User
-    {
-        public string Username { get; set; }
-        public string PasswordHash { get; set; }
-        public string Profile { get; set; }
-    }
-
-    public class Client : User
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string DOB { get; set; }
-        public string Address { get; set; }
-        public string Mobile { get; set; }
-    }
-
-    public class Reservation
-    {
-        public int ID { get; set; }
-        public string Username { get; set; }
-        public string Arrival { get; set; }
-        public string Departure { get; set; }
-        public string RoomType { get; set; }
-    }
-
-    public class DatabaseManager
-    {
-        private readonly string connectionString;
-        public DatabaseManager(string dbPath)
-        {
-            connectionString = "Data Source=" + dbPath + ";Version=3;";
-        }
-
-        public SQLiteConnection GetConnection() =>
-            new SQLiteConnection(connectionString);
-    }
-
     public static class ValidationRules
     {
         public const string UsernamePattern = @"^[A-Za-z0-9_]{3,20}$";
@@ -56,5 +18,6 @@ namespace HotelTivago
         public static bool IsValidAddress(string address) => Regex.IsMatch(address, AddressPattern);
         public static bool IsValidMobile(string mobile) => Regex.IsMatch(mobile, MobilePattern);
         public static bool IsValidEmail(string email) => Regex.IsMatch(email, EmailPattern);
+        public static bool IsValidRoomType(string room) => Regex.IsMatch(room, RoomTypePattern);
     }
 }

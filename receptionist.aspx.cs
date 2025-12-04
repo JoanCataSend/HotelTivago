@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
-using System.Text.RegularExpressions;
 using System.Web.UI.WebControls;
+using HotelTivago.Classes;   // ⭐ IMPORTANTE
 
-namespace HotelTivago
+namespace HotelTivago.Pages
 {
     public partial class receptionist : System.Web.UI.Page
     {
-        private string DBPath;
+        private DatabaseManager db;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["Role"] == null || Session["Role"].ToString() != "receptionist")
                 Response.Redirect("login.aspx");
 
-            DBPath = Server.MapPath("~/bbdd/hoteltrivago.db");
+            string dbPath = Server.MapPath("~/bbdd/hoteltrivago.db");
+            db = new DatabaseManager(dbPath);
 
             if (!IsPostBack)
             {
@@ -24,12 +25,9 @@ namespace HotelTivago
             }
         }
 
-        private SQLiteConnection Conn() =>
-            new SQLiteConnection("Data Source=" + DBPath + ";Version=3;");
-
         private void LoadReservations(string search = "")
         {
-            using (var c = Conn())
+            using (var c = db.GetConnection())
             {
                 c.Open();
 
@@ -39,37 +37,31 @@ namespace HotelTivago
 
                 cmd.Parameters.AddWithValue("@s", "%" + search + "%");
 
-                using (var da = new SQLiteDataAdapter(cmd))
-                {
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    gvReservations.DataSource = dt;
-                    gvReservations.DataKeyNames = new[] { "reservation_id" };
-                    gvReservations.DataBind();
-                }
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                gvReservations.DataSource = dt;
+                gvReservations.DataBind();
             }
         }
 
         private void LoadClients(string search = "")
         {
-            using (var c = Conn())
+            using (var c = db.GetConnection())
             {
                 c.Open();
 
                 var cmd = new SQLiteCommand(
-                    "SELECT username, profile, id_number, name, dob, address, mobile " +
+                    "SELECT username, profile, name, dob, address, mobile " +
                     "FROM users WHERE profile='client' AND (username LIKE @s OR name LIKE @s)", c);
 
                 cmd.Parameters.AddWithValue("@s", "%" + search + "%");
 
-                using (var da = new SQLiteDataAdapter(cmd))
-                {
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-                    gvClients.DataSource = dt;
-                    gvClients.DataKeyNames = new[] { "username" };
-                    gvClients.DataBind();
-                }
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                gvClients.DataSource = dt;
+                gvClients.DataBind();
             }
         }
 
@@ -82,18 +74,38 @@ namespace HotelTivago
                 return;
             }
 
-            using (var c = Conn())
+            if (txtRUser.Text.Trim() == "" || ddlRRoom.SelectedValue == "")
+            {
+                ShowError("Fields cannot be empty.");
+                return;
+            }
+
+            using (var c = db.GetConnection())
             {
                 c.Open();
 
+                // 1️⃣ CHECK IF USER EXISTS
+                var checkUser = new SQLiteCommand(
+                    "SELECT COUNT(*) FROM users WHERE username=@u", c);
+                checkUser.Parameters.AddWithValue("@u", txtRUser.Text.Trim());
+
+                long exists = (long)checkUser.ExecuteScalar();
+
+                if (exists == 0)
+                {
+                    ShowError("The username does not exist. You must enter a valid user.");
+                    return;
+                }
+
+                // 2️⃣ CREATE RESERVATION
                 var cmd = new SQLiteCommand(
                     "INSERT INTO reservations(username, arrival, departure, room_type) " +
                     "VALUES(@u,@a,@d,@r)", c);
 
-                cmd.Parameters.AddWithValue("@u", txtRUser.Text);
-                cmd.Parameters.AddWithValue("@a", txtRArrival.Text);
-                cmd.Parameters.AddWithValue("@d", txtRDeparture.Text);
-                cmd.Parameters.AddWithValue("@r", txtRRoom.Text);
+                cmd.Parameters.AddWithValue("@u", txtRUser.Text.Trim());
+                cmd.Parameters.AddWithValue("@a", txtRArrival.Text.Trim());
+                cmd.Parameters.AddWithValue("@d", txtRDeparture.Text.Trim());
+                cmd.Parameters.AddWithValue("@r", ddlRRoom.SelectedValue);
 
                 cmd.ExecuteNonQuery();
             }
@@ -132,21 +144,22 @@ namespace HotelTivago
             if (!ValidationRules.IsValidDate(txtArrival.Text) ||
                 !ValidationRules.IsValidDate(txtDeparture.Text))
             {
-                ShowError("Invalid date format. Use dd/mm/aaaa.");
+                ShowError("Invalid date format.");
                 return;
             }
 
-            using (var c = Conn())
+            using (var c = db.GetConnection())
             {
                 c.Open();
 
                 var cmd = new SQLiteCommand(
-                    "UPDATE reservations SET username=@u, arrival=@a, departure=@d, room_type=@r WHERE reservation_id=@id", c);
+                    "UPDATE reservations SET username=@u, arrival=@a, departure=@d, room_type=@r " +
+                    "WHERE reservation_id=@id", c);
 
-                cmd.Parameters.AddWithValue("@u", txtUser.Text);
-                cmd.Parameters.AddWithValue("@a", txtArrival.Text);
-                cmd.Parameters.AddWithValue("@d", txtDeparture.Text);
-                cmd.Parameters.AddWithValue("@r", txtRoom.Text);
+                cmd.Parameters.AddWithValue("@u", txtUser.Text.Trim());
+                cmd.Parameters.AddWithValue("@a", txtArrival.Text.Trim());
+                cmd.Parameters.AddWithValue("@d", txtDeparture.Text.Trim());
+                cmd.Parameters.AddWithValue("@r", txtRoom.Text.Trim());
                 cmd.Parameters.AddWithValue("@id", id);
 
                 cmd.ExecuteNonQuery();
@@ -161,7 +174,7 @@ namespace HotelTivago
         {
             int id = Convert.ToInt32(gvReservations.DataKeys[e.RowIndex].Value);
 
-            using (var c = Conn())
+            using (var c = db.GetConnection())
             {
                 c.Open();
 
@@ -180,24 +193,34 @@ namespace HotelTivago
                 !ValidationRules.IsValidDate(txtCDOB.Text) ||
                 !ValidationRules.IsValidMobile(txtCMobile.Text))
             {
-                ShowError("Invalid fields while creating user.");
+                ShowError("Invalid fields.");
                 return;
             }
 
-            using (var c = Conn())
+            using (var c = db.GetConnection())
             {
                 c.Open();
 
+                var checkCmd = new SQLiteCommand("SELECT COUNT(*) FROM users WHERE username=@u", c);
+                checkCmd.Parameters.AddWithValue("@u", txtCUsername.Text.Trim());
+
+                long exists = (long)checkCmd.ExecuteScalar();
+
+                if (exists > 0)
+                {
+                    ShowError("This username already exists. Choose another one.");
+                    return;
+                }
                 var cmd = new SQLiteCommand(
                     "INSERT INTO users(username, password, profile, name, dob, address, mobile) " +
                     "VALUES(@u,@p,'client',@n,@d,@a,@m)", c);
 
-                cmd.Parameters.AddWithValue("@u", txtCUsername.Text);
+                cmd.Parameters.AddWithValue("@u", txtCUsername.Text.Trim());
                 cmd.Parameters.AddWithValue("@p", PasswordMD5.Hash(txtCPassword.Text));
-                cmd.Parameters.AddWithValue("@n", txtCName.Text);
-                cmd.Parameters.AddWithValue("@d", txtCDOB.Text);
-                cmd.Parameters.AddWithValue("@a", txtCAddress.Text);
-                cmd.Parameters.AddWithValue("@m", txtCMobile.Text);
+                cmd.Parameters.AddWithValue("@n", txtCName.Text.Trim());
+                cmd.Parameters.AddWithValue("@d", txtCDOB.Text.Trim());
+                cmd.Parameters.AddWithValue("@a", txtCAddress.Text.Trim());
+                cmd.Parameters.AddWithValue("@m", txtCMobile.Text.Trim());
 
                 cmd.ExecuteNonQuery();
             }
@@ -228,10 +251,10 @@ namespace HotelTivago
             string username = gvClients.DataKeys[e.RowIndex].Value.ToString();
             GridViewRow row = gvClients.Rows[e.RowIndex];
 
-            TextBox txtName = row.Cells[3].Controls[0] as TextBox;
-            TextBox txtDob = row.Cells[4].Controls[0] as TextBox;
-            TextBox txtAddress = row.Cells[5].Controls[0] as TextBox;
-            TextBox txtMobile = row.Cells[6].Controls[0] as TextBox;
+            TextBox txtName = row.Cells[2].Controls[0] as TextBox;
+            TextBox txtDob = row.Cells[3].Controls[0] as TextBox;
+            TextBox txtAddress = row.Cells[4].Controls[0] as TextBox;
+            TextBox txtMobile = row.Cells[5].Controls[0] as TextBox;
 
             if (!ValidationRules.IsValidName(txtName.Text) ||
                 !ValidationRules.IsValidDate(txtDob.Text) ||
@@ -241,17 +264,17 @@ namespace HotelTivago
                 return;
             }
 
-            using (var c = Conn())
+            using (var c = db.GetConnection())
             {
                 c.Open();
 
                 var cmd = new SQLiteCommand(
                     "UPDATE users SET name=@n, dob=@d, address=@a, mobile=@m WHERE username=@u", c);
 
-                cmd.Parameters.AddWithValue("@n", txtName.Text);
-                cmd.Parameters.AddWithValue("@d", txtDob.Text);
-                cmd.Parameters.AddWithValue("@a", txtAddress.Text);
-                cmd.Parameters.AddWithValue("@m", txtMobile.Text);
+                cmd.Parameters.AddWithValue("@n", txtName.Text.Trim());
+                cmd.Parameters.AddWithValue("@d", txtDob.Text.Trim());
+                cmd.Parameters.AddWithValue("@a", txtAddress.Text.Trim());
+                cmd.Parameters.AddWithValue("@m", txtMobile.Text.Trim());
                 cmd.Parameters.AddWithValue("@u", username);
 
                 cmd.ExecuteNonQuery();
@@ -266,7 +289,7 @@ namespace HotelTivago
         {
             string username = gvClients.DataKeys[e.RowIndex].Value.ToString();
 
-            using (var c = Conn())
+            using (var c = db.GetConnection())
             {
                 c.Open();
 
@@ -284,14 +307,12 @@ namespace HotelTivago
 
         private void ShowError(string message)
         {
-            if (lblError != null)
-                lblError.Text = message;
+            lblError.Text = message;
         }
 
         private void ClearError()
         {
-            if (lblError != null)
-                lblError.Text = "";
+            lblError.Text = "";
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace HotelTivago
+namespace HotelTivago.Pages
 {
 
 

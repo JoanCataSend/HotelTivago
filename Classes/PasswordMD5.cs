@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace HotelTivago
+namespace HotelTivago.Classes
 {
     public static class PasswordMD5
     {
@@ -12,7 +12,7 @@ namespace HotelTivago
                 byte[] inputBytes = Encoding.UTF8.GetBytes(input);
                 byte[] hashBytes = md5.ComputeHash(inputBytes);
 
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new StringBuilder(hashBytes.Length * 2);
                 foreach (byte b in hashBytes)
                 {
                     sb.Append(b.ToString("x2"));

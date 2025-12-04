@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using HotelTivago.Classes;
 
-namespace HotelTivago
+namespace HotelTivago.Pages
 {
     public partial class client : System.Web.UI.Page
     {
-        string DB;
+        private DatabaseManager db;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -16,7 +17,8 @@ namespace HotelTivago
                 return;
             }
 
-            DB = Server.MapPath("~/bbdd/hoteltrivago.db");
+            string dbPath = Server.MapPath("~/bbdd/hoteltrivago.db");
+            db = new DatabaseManager(dbPath);
 
             if (!IsPostBack)
             {
@@ -25,25 +27,25 @@ namespace HotelTivago
             }
         }
 
-        SQLiteConnection Conn()
+        private void LoadClientInfo()
         {
-            return new SQLiteConnection("Data Source=" + DB + ";Version=3;");
-        }
-
-        void LoadClientInfo()
-        {
-            using (var c = Conn())
+            using (var c = db.GetConnection())
             {
                 c.Open();
 
                 var cmd = new SQLiteCommand("SELECT * FROM users WHERE username=@u", c);
-                cmd.Parameters.AddWithValue("@u", Session["Username"].ToString());
+                cmd.Parameters.AddWithValue("@u", Session["Username"]);
 
                 DataTable t = new DataTable();
                 t.Load(cmd.ExecuteReader());
 
+                if (t.Rows.Count == 0)
+                {
+                    Response.Redirect("login.aspx");
+                    return;
+                }
+
                 lblUsername.Text = t.Rows[0]["username"].ToString();
-                lblID.Text = t.Rows[0]["id_number"].ToString();
                 lblName.Text = t.Rows[0]["name"].ToString();
                 lblDOB.Text = t.Rows[0]["dob"].ToString();
                 lblAddress.Text = t.Rows[0]["address"].ToString();
@@ -51,13 +53,16 @@ namespace HotelTivago
             }
         }
 
-        void LoadReservations()
+        private void LoadReservations()
         {
-            using (var c = Conn())
+            using (var c = db.GetConnection())
             {
                 c.Open();
-                var cmd = new SQLiteCommand("SELECT reservation_id, arrival, departure, room_type FROM reservations WHERE username=@u", c);
-                cmd.Parameters.AddWithValue("@u", Session["Username"].ToString());
+
+                var cmd = new SQLiteCommand(
+                    "SELECT reservation_id, arrival, departure, room_type FROM reservations WHERE username=@u", c);
+
+                cmd.Parameters.AddWithValue("@u", Session["Username"]);
 
                 DataTable t = new DataTable();
                 t.Load(cmd.ExecuteReader());
